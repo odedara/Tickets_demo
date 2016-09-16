@@ -76,4 +76,27 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+   config.action_mailer.default_url_options = { :host => 'https://stark-depths-54664.herokuapp.com' }
+  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {:address => "localhost"}
+
+  config.action_mailer.perform_deliveries = true 
+  config.action_mailer.raise_delivery_errors = true
+
+  # Paperclip.options[:image_magick_path] = "/opt/ImageMagick/bin"
+  # Paperclip.options[:command_path] = "/opt/ImageMagick/bin"
+
+  #config.action_mailer.preview_path = "#{Rails.root}/app/mailer_previews"
+
+  config.action_mailer.smtp_settings = {
+      :address              => "smtp.gmail.com",
+      :port                 => 587,
+      :domain               => "gmail.com",
+      :user_name            => "itserviceyouth@gmail.com",
+      :password             => "Badashah26",
+      :authentication       => :plain,
+      :enable_starttls_auto => true
+  }
+
 end
