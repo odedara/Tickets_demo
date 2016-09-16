@@ -1,0 +1,41 @@
+<h1>List of Users</h1>
+
+ <table class="table table-striped">
+      <tr>
+        <th>Email</th>
+        <th>Status</th>
+  
+        <th colspan="3"></th>
+      </tr>
+     
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.status ? "Active" : "Inactive" %></td>
+
+         
+          <td><%#= link_to 'Block', user_path(user) %>
+            <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+            id="myonoffswitch<%=user.id%>"  <%=user.status ? "checked" : "" %> 
+            data-id="<%= user.id %>">
+            <label class="onoffswitch-label" for="myonoffswitch<%=user.id%>">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </label>
+          </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <script type="text/javascript">
+      $('.onoffswitch-checkbox').click(function() {
+    var id = $(this).data("id");
+    $.ajax({
+      type: 'GET', 
+      url: '/block_user/' + ($(this).data("id")) + '/' + $("#myonoffswitch"+id).is(':checked')
+    });
+    return true;
+  });
+    </script>

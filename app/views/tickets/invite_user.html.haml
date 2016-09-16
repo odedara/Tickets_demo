@@ -1,0 +1,11 @@
+= form_for(:invite, url: send_invite_path) do |f|
+  %p
+    = f.label :select_ticket
+  %p
+    = f.collection_select :ticket_id, current_user.tickets.order(:title),:id,:title, include_blank: true
+  %p
+    = f.label :email
+  %p
+    = f.text_field :email
+  %p
+    = f.submit

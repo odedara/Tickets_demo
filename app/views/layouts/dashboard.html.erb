@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Tickets" %></title>
+    <%= csrf_meta_tags %>
+    <!-- <title>Tickets</title> -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%#= csrf_meta_tags %>
+  </head>
+<body>
+  <div id="main-wraper">
+    <div id="top-wraper">
+      <div id="banner">Tickets </div>
+      <div id="nav">
+      <ul>
+        <!-- <li><a href="/welcome/index">Home</a></li> -->
+        <li><%= menu_item 'Home', welcome_index_path, :class => 'navbar-link' %></li> 
+        <% if current_user and current_user.admin? %>
+          <li><%= menu_item 'Users', users_path, :class => 'navbar-link' %></li>
+        <% end %> 
+        <li><%= menu_item 'Tickets', tickets_path, :class => 'navbar-link' %></li> 
+        <li><%= menu_item 'Category', categories_path, :class => 'navbar-link' %></li> 
+
+        <!-- <li><a href="#">Users</a></li>
+        <li><a href="/tickets">Tickets</a></li>
+        <li><a href="/categories">Category</a></li>
+         -->
+         <% if user_signed_in? %>
+            <li><%= menu_item "Logout", destroy_user_session_path  %></li>
+            <!-- <li><a href="/users/sign_out">Logout</a></li> -->
+        <% else %>
+            <li><%= menu_item "Login", new_user_session_path %></li>
+          <% end %>
+        
+      </ul>
+      </div>
+    </div>
+    <div id="mid-wraper">
+      <div class="mid-wraper-top">
+        <div class="mid-leftouter">
+          <div class="mid-left-container">
+          
+            <!-- <%#yield%> -->
+          </div>
+
+          
+          <div class="mid-left-container" style="margin-top: 10px;">
+            <div class="inner-left">
+              
+              <div style="border-right: 1px solid rgb(153, 153, 153); width: 294px; float: left; padding-right: 12px;">
+                
+                
+              </div>
+            </div>
+            <div class="inner-right">
+            
+            <div style="width: 290px; float: left; padding-left: 8px;"></div>
+            </div>
+          </div>
+        </div>
+        
+          <%#= bootstrap_flash %>
+          <%#= yield %>
+     
+       
+
+        <div class="right-container">
+          <div class="right-container-top">
+          <h3>Categ<span class="yellow-heading">ories</span></h3>
+            <ul>
+              <li><a href="#">Lorem Ipsum is simply dummy</a></li>
+              <li><a href="#">Lorem Ipsum is</a></li>
+              <li><a href="#">Lorem Ipsum</a></li>
+              
+            </ul>
+          </div>
+          <div class="right-container-dwn">
+            <h4>News</h4>
+            <strong>15.04.2010</strong> Lorem Ipsum is simply dummy text of the
+            printing and typesetting industry. Lorem Ipsum has been. <br>
+            <br>
+            <strong>15.04.2010</strong> Lorem Ipsum is simply dummy text of the
+            printing and typesetting industry. Lorem Ipsum has been.<br>
+            <br>
+            <strong><a href="#" class="read-more-right">read more...</a></strong> 
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+        <%= bootstrap_flash %>
+          <%= yield %>
+          </div>
+          </div>
+          </div>
+
+      </div>
+      <div class="mid-wraper-bttm"><img src="images/mid-bttm.jpg" alt=""></div>
+    </div>
+    <div class="footer">
+      <div class="footer-side">
+        <a href="/welcome/index">Home</a> 
+        <a href="/users">Users</a> 
+        <a href="/tickets">Tickets</a> 
+        <a href="/categories">Category</a> 
+        
+      </div>
+
+      <!--DO NOT Remove The Footer Links-->
+      <!--Designed by-->
+      <a target="_blank" href="http://www.htmltemplates.net">
+      <img src="images/design.gif" class="copyright" alt="htmltemplates.net"></a>
+      <div class="footer-right">&copy; Copyright 2014. Designed by <a target="_blank" href="http://www.htmltemplates.net">htmltemplates.net</a>
+      <!--DO NOT Remove The Footer Links-->
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

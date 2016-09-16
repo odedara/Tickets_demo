@@ -1,0 +1,152 @@
+<div class="container">
+  <div class="raw">
+    <div class="col-sm-3">
+
+      <h1>List of tickets</h1>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<%= form_tag tickets_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= select_tag 'category_id', options_for_select(Category.all.map{|el| [el.name, el.id]}, params[:search]), :include_blank => true %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+
+  <!-- <p>
+    <%#= button_tag "Invite" %>
+  </p> -->
+
+<% end %> 
+
+
+<%#= link_to "Invite ", invite_user_path %>
+<!-- <form method="post" action="/controller/invite_user" class="button_to"> -->
+      <!-- <input value="New" type="submit" /> -->
+    <!-- </form> -->
+
+
+
+<% if @tickets.blank? %>
+  <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+<% else %> 
+  <table class="table table-striped">
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+
+    <% @tickets.each do |ticket| %>
+    <tr>
+      <td><%= ticket.title %></td>
+      <td><%= ticket.description %></td>
+      <td><%= ticket.category.name %></td>
+      
+    
+      <% if current_user.admin? %>
+        <td>
+          <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+            id="myonoffswitch<%=ticket.id%>"  <%=ticket.status ? "checked" : "" %> data-id="<%= ticket.id %>">
+            <label class="onoffswitch-label" for="myonoffswitch<%=ticket.id%>">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </label>
+          </div>
+
+        </td>
+      <% else %>
+        <td><%= ticket.status ? "Open" : "Close" %></td>
+      <% end %>
+
+  
+      <td><%= link_to 'Show', ticket_path(ticket) %></td>
+      <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+      <td><%= link_to 'Destroy', ticket_path(ticket),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %> 
+  </table>
+<% end %>
+
+<% if @invited_tikets %>
+<h1> Tickets from inviter </h1>
+<table class="table table-striped">
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+
+    <% @invited_tikets.each do |ticket| %>
+    <tr>
+      <td><%= ticket.title %></td>
+      <td><%= ticket.description %></td>
+      <td><%= ticket.category.name %></td>
+      
+    
+      <% if current_user.admin? %>
+        <td>
+          <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+            id="myonoffswitch<%=ticket.id%>"  <%=ticket.status ? "checked" : "" %> data-id="<%= ticket.id %>">
+            <label class="onoffswitch-label" for="myonoffswitch<%=ticket.id%>">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </label>
+          </div>
+
+        </td>
+      <% else %>
+        <td><%= ticket.status ? "Open" : "Close" %></td>
+      <% end %>
+
+  
+      <td><%= link_to 'Show', ticket_path(ticket) %></td>
+      
+    </tr>
+    <% end %> 
+  </table>
+<% end %>
+
+<%= link_to 'New ticket', new_ticket_path,  'data-no-turbolink' => true %>
+
+<%= link_to "Invite ", invite_user_path %>
+<script type="text/javascript">
+  // $(document).on('click', '.toggle-button', function() {
+  //     var id = $(this).data("id");
+  //     $.ajax({
+  //       type: 'GET', 
+  //       url: '/change_status/' + ($(this).data("id")) + '/' + $("#myonoffswitch"+id).is(':checked')
+
+  //     });
+
+  //     $(this).toggleClass('toggle-button-selected'); 
+  // });
+
+  $('.onoffswitch-checkbox').click(function() {
+    var id = $(this).data("id");
+    $.ajax({
+      type: 'GET', 
+      url: '/change_status/' + ($(this).data("id")) + '/' + $("#myonoffswitch"+id).is(':checked')
+    });
+    return true;
+  });
+</script>
+
+
+
+
+
+
+ 

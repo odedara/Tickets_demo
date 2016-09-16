@@ -1,0 +1,14 @@
+%table.table-striped{:class => "class=table"}
+  %tr
+    %th Commenter
+    %th Comment
+  %tr
+    %td= comment.commenter
+    %td= comment.body
+- if @ticket.user_id == current_user.id 
+  = link_to 'Destroy Comment', [comment.ticket, comment],  |
+    method: :delete,                                       |
+    data: { confirm: 'Are you sure?' }                     |
+
+
+

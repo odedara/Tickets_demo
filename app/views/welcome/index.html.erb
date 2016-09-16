@@ -1,0 +1,8 @@
+<h1>Welcome</h1>
+
+<% if user_signed_in? %>
+
+<%= link_to 'My Tickets', controller: 'tickets' %>
+<% else %>
+<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+<% end %>
